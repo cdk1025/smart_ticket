@@ -33,9 +33,9 @@ export default function ResultPage() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row h-full gap-4 p-4 bg-gray-50">
+    <div className="flex flex-col md:flex-row md:h-full gap-4 p-4 bg-gray-50">
       {/* Left: PDF Preview */}
-      <div className="h-[50vh] md:h-auto md:flex-1 min-h-0 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div className="h-[60vh] md:h-auto md:flex-1 min-h-0 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
         <iframe
           src={mergedPdfUrl}
           className="w-full h-full"
@@ -44,7 +44,7 @@ export default function ResultPage() {
       </div>
 
       {/* Right: Action Panel */}
-      <div className="shrink-0 md:w-80 flex flex-col items-center justify-center gap-5 py-4 md:py-0">
+      <div className="shrink-0 md:w-56 flex flex-col items-center justify-center gap-5 py-4 md:py-0">
         {/* Success Icon & Title */}
         <div className="text-center">
           <div className="mb-2 inline-flex items-center justify-center rounded-full bg-green-100 p-3">

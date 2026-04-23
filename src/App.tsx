@@ -8,9 +8,9 @@ import Footer from './components/Footer'
 function App() {
   return (
     <HashRouter>
-      <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="h-screen flex flex-col bg-gray-50 overflow-hidden">
         <Header />
-        <main className="flex-1 min-h-0">
+        <main className="flex-1 min-h-0 overflow-auto">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/editor" element={<EditorPage />} />
