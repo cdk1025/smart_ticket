@@ -33,35 +33,34 @@ export default function ResultPage() {
   }
 
   return (
-    <div className="bg-gray-50">
-      <div className="mx-auto max-w-900px px-4 py-8 md:py-12">
+    <div className="flex flex-col h-full bg-gray-50">
+      <div className="mx-auto w-full max-w-900px px-4 flex flex-col h-full">
         {/* Header */}
-        <div className="mb-6 text-center md:mb-8">
-          <div className="mb-2 inline-flex items-center justify-center rounded-full bg-green-100 p-3">
-            <svg className="h-8 w-8 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div className="shrink-0 py-3 text-center md:py-4">
+          <div className="mb-1 inline-flex items-center justify-center rounded-full bg-green-100 p-2">
+            <svg className="h-6 w-6 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
               <polyline points="22 4 12 14.01 9 11.01" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-gray-800 md:text-3xl">合并完成</h1>
-          <p className="mt-1 text-sm text-gray-500 md:text-base">您的 PDF 已准备就绪</p>
+          <h1 className="text-xl font-bold text-gray-800 md:text-2xl">合并完成</h1>
+          <p className="mt-0.5 text-sm text-gray-500">您的 PDF 已准备就绪</p>
         </div>
 
         {/* PDF Preview */}
-        <div className="mb-6 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm md:mb-8">
+        <div className="flex-1 min-h-0 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
           <iframe
             src={mergedPdfUrl}
-            className="h-[50vh] w-full md:h-[70vh]"
-            style={{ minHeight: '400px' }}
+            className="w-full h-full"
             title="PDF Preview"
           />
         </div>
 
         {/* Action Buttons */}
-        <div className="mb-6 flex flex-col items-center gap-3 md:flex-row md:justify-center md:gap-4">
+        <div className="shrink-0 py-3 flex flex-col items-center gap-2 md:flex-row md:justify-center md:gap-4">
           <button
             onClick={handleDownload}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:bg-blue-800 md:w-auto md:text-base"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:bg-blue-800 md:w-auto md:text-base"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -73,7 +72,7 @@ export default function ResultPage() {
 
           <button
             onClick={() => navigate('/editor')}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50 active:bg-gray-100 md:w-auto md:text-base"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 active:bg-gray-100 md:w-auto md:text-base"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -84,7 +83,7 @@ export default function ResultPage() {
 
           <button
             onClick={handleRestart}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium text-gray-500 transition hover:bg-gray-100 hover:text-gray-700 active:bg-gray-200 md:w-auto md:text-base"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg px-6 py-2.5 text-sm font-medium text-gray-500 transition hover:bg-gray-100 hover:text-gray-700 active:bg-gray-200 md:w-auto md:text-base"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="1 4 1 10 7 10" />
@@ -95,7 +94,7 @@ export default function ResultPage() {
         </div>
 
         {/* Privacy Reminder */}
-        <p className="text-center text-xs text-gray-400 md:text-sm">
+        <p className="shrink-0 pb-2 text-center text-xs text-gray-400">
           🔒 您的文件仅在本地处理，未上传至任何服务器
         </p>
       </div>
