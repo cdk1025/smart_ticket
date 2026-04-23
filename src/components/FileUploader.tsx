@@ -17,7 +17,7 @@ export default function FileUploader({ onFilesAdded }: FileUploaderProps) {
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
-  const addFiles = useFileStore((s) => s.addFiles)
+  const replaceFiles = useFileStore((s) => s.replaceFiles)
 
   const processFiles = useCallback(
     async (fileList: FileList | File[]) => {
@@ -57,7 +57,7 @@ export default function FileUploader({ onFilesAdded }: FileUploaderProps) {
           })
         )
 
-        addFiles(uploadedFiles)
+        replaceFiles(uploadedFiles)
         onFilesAdded?.()
         navigate('/editor')
       } catch (err) {
@@ -66,7 +66,7 @@ export default function FileUploader({ onFilesAdded }: FileUploaderProps) {
         setIsProcessing(false)
       }
     },
-    [addFiles, navigate, onFilesAdded]
+    [replaceFiles, navigate, onFilesAdded]
   )
 
   const handleClick = () => {

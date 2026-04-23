@@ -8,6 +8,7 @@ interface FileStore {
   isMerging: boolean
 
   addFiles: (files: UploadedFile[]) => void
+  replaceFiles: (files: UploadedFile[]) => void
   removeFile: (id: string) => void
   reorderFiles: (files: UploadedFile[]) => void
   rotateFile: (id: string) => void
@@ -27,6 +28,17 @@ export const useFileStore = create<FileStore>((set, get) => ({
 
   addFiles: (newFiles) => {
     set((state) => ({ files: [...state.files, ...newFiles] }))
+  },
+
+  replaceFiles: (newFiles) => {
+    const { files, mergedPdfUrl } = get()
+    for (const f of files) {
+      URL.revokeObjectURL(f.thumbnailUrl)
+    }
+    if (mergedPdfUrl) {
+      URL.revokeObjectURL(mergedPdfUrl)
+    }
+    set({ files: newFiles, mergedPdfUrl: null, mergedPdfBytes: null })
   },
 
   removeFile: (id) => {

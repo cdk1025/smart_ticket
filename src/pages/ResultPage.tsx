@@ -96,6 +96,11 @@ export default function ResultPage() {
           </button>
         </div>
 
+        {/* Privacy Reminder */}
+        <p className="text-center text-xs text-gray-400">
+          🔒 您的文件仅在本地处理，未上传至任何服务器
+        </p>
+
         {/* Donate Section */}
         <div className="text-center">
           <p className="text-xs text-gray-400 mb-2">☕ 打赏支持</p>
@@ -110,11 +115,6 @@ export default function ResultPage() {
             </div>
           </div>
         </div>
-
-        {/* Privacy Reminder */}
-        <p className="text-center text-xs text-gray-400">
-          🔒 您的文件仅在本地处理，未上传至任何服务器
-        </p>
       </div>
     </div>
   )
