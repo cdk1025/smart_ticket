@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { saveAs } from 'file-saver'
 import { useFileStore } from '../store/useFileStore'
+import aliPay from '../assets/ali_pay.jpg'
+import wxPay from '../assets/wx_pay.png'
 
 export default function ResultPage() {
   const navigate = useNavigate()
@@ -44,7 +46,7 @@ export default function ResultPage() {
       </div>
 
       {/* Right: Action Panel */}
-      <div className="shrink-0 md:w-56 flex flex-col items-center justify-center gap-5 py-4 md:py-0">
+      <div className="shrink-0 md:w-72 flex flex-col items-center justify-center gap-5 py-4 md:py-0">
         {/* Success Icon & Title */}
         <div className="text-center">
           <div className="mb-2 inline-flex items-center justify-center rounded-full bg-green-100 p-3">
@@ -92,6 +94,21 @@ export default function ResultPage() {
             </svg>
             重新开始
           </button>
+        </div>
+
+        {/* Donate Section */}
+        <div className="text-center">
+          <p className="text-xs text-gray-400 mb-2">☕ 打赏支持</p>
+          <div className="flex gap-3 justify-center">
+            <div className="text-center">
+              <img src={aliPay} alt="支付宝" className="w-20 h-20 rounded-lg border border-gray-200" />
+              <p className="text-xs text-gray-400 mt-1">支付宝</p>
+            </div>
+            <div className="text-center">
+              <img src={wxPay} alt="微信支付" className="w-20 h-20 rounded-lg border border-gray-200" />
+              <p className="text-xs text-gray-400 mt-1">微信支付</p>
+            </div>
+          </div>
         </div>
 
         {/* Privacy Reminder */}
