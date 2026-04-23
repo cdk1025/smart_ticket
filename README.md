@@ -32,6 +32,12 @@ No server. No upload. **100% local processing.** Your documents never leave your
 
 👉 **[https://cdk1025.github.io/smart_ticket/](https://cdk1025.github.io/smart_ticket/)**
 
+## 📸 Screenshots
+
+| Home | Editor | Result |
+|:---:|:---:|:---:|
+| <img src="src/assets/home.png" width="280"> | <img src="src/assets/edit.png" width="280"> | <img src="src/assets/result.png" width="280"> |
+
 ### ✨ Features
 
 - 📂 **Upload PDF, JPG, PNG files** — drag & drop or click to browse

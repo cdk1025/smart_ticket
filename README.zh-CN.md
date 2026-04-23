@@ -34,6 +34,12 @@
 
 👉 **[https://cdk1025.github.io/smart_ticket/](https://cdk1025.github.io/smart_ticket/)**
 
+## 📸 效果展示
+
+| 首页 | 编辑页 | 结果页 |
+|:---:|:---:|:---:|
+| <img src="src/assets/home.png" width="280"> | <img src="src/assets/edit.png" width="280"> | <img src="src/assets/result.png" width="280"> |
+
 ### ✨ 功能特性
 
 - 📂 **支持 PDF、JPG、PNG 文件上传** — 拖拽或点击选择
