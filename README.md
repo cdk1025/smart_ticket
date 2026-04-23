@@ -43,6 +43,7 @@ No server. No upload. **100% local processing.** Your documents never leave your
 - 👁️ **Browser preview** — review the result before downloading
 - ⬇️ **Instant download** — save your merged PDF with one click
 - 🔒 **Pure client-side** — zero server, zero upload, privacy safe
+- 🎨 **Image Enhancement** — Adjust contrast, brightness, and sharpness before merging (Canvas API)
 
 ### 🛠️ Tech Stack
 
@@ -85,7 +86,7 @@ npm run deploy
 - [ ] 🤖 AI invoice classification & categorization
 - [ ] 💰 AI amount extraction & expense ledger generation
 - [ ] 📑 Multi-ticket smart layout per page
-- [ ] 🧹 Invoice edge cleanup & clarity enhancement
+- [ ] 🧹 Invoice edge cleanup & clarity enhancement — ✅ Phase 1 Done
 - [ ] 🔍 Duplicate reimbursement detection
 
 ### 📄 License
