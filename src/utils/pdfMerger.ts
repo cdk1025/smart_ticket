@@ -1,4 +1,4 @@
-import { PDFDocument } from 'pdf-lib'
+import { PDFDocument, rgb } from 'pdf-lib'
 import type { PDFPage, PDFImage } from 'pdf-lib'
 import * as pdfjsLib from 'pdfjs-dist'
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
@@ -10,16 +10,20 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker
 // A4 dimensions in points
 const A4_WIDTH = 595.28
 const A4_HEIGHT = 841.89
-const MARGIN = 20
-const GAP = 10
+const MARGIN = 16
+const GAP = 16
 
 // Usable area
-const USABLE_WIDTH = A4_WIDTH - MARGIN * 2   // 555.28
-const USABLE_HEIGHT = A4_HEIGHT - MARGIN * 2 // 801.89
+const USABLE_WIDTH = A4_WIDTH - MARGIN * 2   // 563.28
+const USABLE_HEIGHT = A4_HEIGHT - MARGIN * 2 // 809.89
 
 // Slot dimensions
-const SLOT_HALF_HEIGHT = (USABLE_HEIGHT - GAP) / 2  // 395.945
-const SLOT_HALF_WIDTH = (USABLE_WIDTH - GAP) / 2    // 272.64
+const SLOT_HALF_HEIGHT = (USABLE_HEIGHT - GAP) / 2  // 396.945
+const SLOT_HALF_WIDTH = (USABLE_WIDTH - GAP) / 2    // 273.64
+
+// CMap configuration for CJK font rendering
+const PDFJS_CMAP_URL = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/cmaps/'
+const PDFJS_STANDARD_FONT_URL = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/standard_fonts/'
 
 // Slot positions (pdf-lib y is from bottom)
 const SLOT_TOP = { x: MARGIN, y: A4_HEIGHT - MARGIN - SLOT_HALF_HEIGHT, width: USABLE_WIDTH, height: SLOT_HALF_HEIGHT }
@@ -45,7 +49,12 @@ interface Slot {
  */
 async function pdfToImage(file: File): Promise<Uint8Array> {
   const arrayBuffer = await file.arrayBuffer()
-  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
+  const pdf = await pdfjsLib.getDocument({
+    data: arrayBuffer,
+    cMapUrl: PDFJS_CMAP_URL,
+    cMapPacked: true,
+    standardFontDataUrl: PDFJS_STANDARD_FONT_URL,
+  }).promise
   const page = await pdf.getPage(1)
 
   // Render at a resolution that gives good quality for half-A4
@@ -201,6 +210,7 @@ export async function mergeFiles(files: UploadedFile[]): Promise<Uint8Array> {
     const page = pdfDoc.addPage([A4_WIDTH, A4_HEIGHT])
     await drawInvoiceInSlot(pdfDoc, page, top, SLOT_TOP)
     await drawInvoiceInSlot(pdfDoc, page, bottom, SLOT_BOTTOM)
+    drawHorizontalCutLine(page)
   }
 
   // 2. Mixed page (odd invoice + up to 2 bills)
@@ -210,13 +220,17 @@ export async function mergeFiles(files: UploadedFile[]): Promise<Uint8Array> {
     await drawInvoiceInSlot(pdfDoc, page, remainingInvoice, SLOT_TOP)
 
     // Place up to 2 bills in bottom half (left/right)
-    if (bills.length >= 1) {
+    const hasBillsBelow = bills.length >= 1
+    if (hasBillsBelow) {
       await drawBillInSlot(pdfDoc, page, bills[0], SLOT_BOTTOM_LEFT)
       billStartIndex = 1
     }
     if (bills.length >= 2) {
       await drawBillInSlot(pdfDoc, page, bills[1], SLOT_BOTTOM_RIGHT)
       billStartIndex = 2
+    }
+    if (hasBillsBelow) {
+      drawHorizontalCutLine(page)
     }
   }
 
@@ -228,7 +242,47 @@ export async function mergeFiles(files: UploadedFile[]): Promise<Uint8Array> {
     for (let j = 0; j < chunk.length; j++) {
       await drawBillInSlot(pdfDoc, page, chunk[j], FOUR_GRID_SLOTS[j])
     }
+    // Draw cut lines for 4-grid pages
+    const hasBottom = chunk.length > 2
+    if (hasBottom) {
+      drawHorizontalCutLine(page)
+    }
+    if (chunk.length > 1) {
+      drawVerticalCutLine(page, hasBottom)
+    }
   }
 
   return pdfDoc.save()
+}
+
+/**
+ * Draw a horizontal dashed cut line between top and bottom slots.
+ */
+function drawHorizontalCutLine(page: PDFPage): void {
+  const cutLineY = MARGIN + SLOT_HALF_HEIGHT + GAP / 2
+  page.drawLine({
+    start: { x: MARGIN, y: cutLineY },
+    end: { x: A4_WIDTH - MARGIN, y: cutLineY },
+    thickness: 0.5,
+    color: rgb(0.7, 0.7, 0.7),
+    dashArray: [4, 4],
+    opacity: 0.8,
+  })
+}
+
+/**
+ * Draw a vertical dashed cut line between left and right columns in 4-grid layout.
+ */
+function drawVerticalCutLine(page: PDFPage, fullHeight: boolean): void {
+  const cutLineX = MARGIN + SLOT_HALF_WIDTH + GAP / 2
+  const topY = A4_HEIGHT - MARGIN
+  const bottomY = fullHeight ? MARGIN : (MARGIN + SLOT_HALF_HEIGHT + GAP)
+  page.drawLine({
+    start: { x: cutLineX, y: topY },
+    end: { x: cutLineX, y: bottomY },
+    thickness: 0.5,
+    color: rgb(0.7, 0.7, 0.7),
+    dashArray: [4, 4],
+    opacity: 0.8,
+  })
 }

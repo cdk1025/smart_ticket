@@ -3,6 +3,10 @@ import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker
 
+// CMap configuration for CJK font rendering
+const PDFJS_CMAP_URL = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/cmaps/'
+const PDFJS_STANDARD_FONT_URL = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.6.205/standard_fonts/'
+
 const MAX_THUMB_WIDTH = 200
 const MAX_THUMB_HEIGHT = 280
 
@@ -43,7 +47,12 @@ async function generateImageThumbnail(file: File): Promise<string> {
 
 async function generatePdfThumbnail(file: File): Promise<string> {
   const arrayBuffer = await file.arrayBuffer()
-  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
+  const pdf = await pdfjsLib.getDocument({
+    data: arrayBuffer,
+    cMapUrl: PDFJS_CMAP_URL,
+    cMapPacked: true,
+    standardFontDataUrl: PDFJS_STANDARD_FONT_URL,
+  }).promise
   const page = await pdf.getPage(1)
 
   const unscaledViewport = page.getViewport({ scale: 1 })
