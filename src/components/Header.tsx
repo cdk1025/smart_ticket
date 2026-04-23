@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router'
+import Logo from './Logo'
 
 export default function Header() {
   const navigate = useNavigate()
@@ -8,9 +9,9 @@ export default function Header() {
       <button
         type="button"
         onClick={() => navigate('/')}
-        className="text-lg font-bold text-blue-600 hover:text-blue-700 transition-colors tracking-tight"
+        className="hover:opacity-80 transition-opacity"
       >
-        智票合
+        <Logo />
       </button>
     </header>
   )

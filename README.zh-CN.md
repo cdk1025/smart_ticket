@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/logo.svg" alt="智票合 Logo" width="400">
+</p>
+
 <div align="center">
 
 # 🧾 智票合

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/logo.svg" alt="Smart Ticket Logo" width="400">
+</p>
+
 <div align="center">
 
 # 🧾 Smart Ticket
