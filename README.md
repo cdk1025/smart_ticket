@@ -10,7 +10,7 @@
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![UnoCSS](https://img.shields.io/badge/UnoCSS-Atomic-333?logo=unocss&logoColor=white)](https://unocss.dev/)
 [![pdf-lib](https://img.shields.io/badge/pdf--lib-PDF_Engine-red)](https://pdf-lib.js.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -53,7 +53,7 @@ No server. No upload. **100% local processing.** Your documents never leave your
 | PDF Engine | pdf-lib (merge) + pdfjs-dist (thumbnails) |
 | State Management | Zustand |
 | Drag & Drop | @dnd-kit |
-| Build Tool | Vite 6 |
+| Build Tool | Vite 8 |
 | File Download | FileSaver.js |
 
 ### 🚀 Getting Started

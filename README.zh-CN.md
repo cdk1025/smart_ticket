@@ -10,7 +10,7 @@
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![UnoCSS](https://img.shields.io/badge/UnoCSS-Atomic-333?logo=unocss&logoColor=white)](https://unocss.dev/)
 [![pdf-lib](https://img.shields.io/badge/pdf--lib-PDF_Engine-red)](https://pdf-lib.js.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -55,7 +55,7 @@
 | PDF 引擎 | pdf-lib（合并）+ pdfjs-dist（缩略图） |
 | 状态管理 | Zustand |
 | 拖拽功能 | @dnd-kit |
-| 构建工具 | Vite 6 |
+| 构建工具 | Vite 8 |
 | 文件下载 | FileSaver.js |
 
 ### 🚀 快速开始

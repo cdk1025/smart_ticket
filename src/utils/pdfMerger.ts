@@ -4,6 +4,8 @@ import * as pdfjsLib from 'pdfjs-dist'
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
 import type { UploadedFile } from '../types'
 import { rotateImage } from './imageProcessor'
+import { enhanceImage, isEnhanced, defaultEnhanceOptions } from './imageEnhancer'
+import type { EnhanceOptions } from './imageEnhancer'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker
 
@@ -90,11 +92,43 @@ async function pdfToImage(file: File): Promise<Uint8Array> {
 async function processImage(
   file: File,
   rotation: number,
+  enhanceOptions?: EnhanceOptions,
 ): Promise<{ bytes: Uint8Array; type: 'jpg' | 'png' }> {
-  if (rotation !== 0) {
-    // rotateImage returns a PNG Blob
-    const rotatedBlob = await rotateImage(file, rotation)
-    const ab = await rotatedBlob.arrayBuffer()
+  const needsEnhance = enhanceOptions && isEnhanced(enhanceOptions)
+
+  if (rotation !== 0 || needsEnhance) {
+    // Load image into canvas
+    const bitmap = await createImageBitmap(file)
+    let canvas = document.createElement('canvas')
+
+    if (rotation !== 0) {
+      const rotatedBlob = await rotateImage(file, rotation)
+      const rotatedBitmap = await createImageBitmap(rotatedBlob)
+      canvas.width = rotatedBitmap.width
+      canvas.height = rotatedBitmap.height
+      const ctx = canvas.getContext('2d')!
+      ctx.drawImage(rotatedBitmap, 0, 0)
+      rotatedBitmap.close()
+    } else {
+      canvas.width = bitmap.width
+      canvas.height = bitmap.height
+      const ctx = canvas.getContext('2d')!
+      ctx.drawImage(bitmap, 0, 0)
+    }
+    bitmap.close()
+
+    // Apply enhancement if needed
+    if (needsEnhance) {
+      canvas = enhanceImage(canvas, enhanceOptions)
+    }
+
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      canvas.toBlob(
+        (b) => (b ? resolve(b) : reject(new Error('Canvas toBlob failed'))),
+        'image/png',
+      )
+    })
+    const ab = await blob.arrayBuffer()
     return { bytes: new Uint8Array(ab), type: 'png' }
   }
 
@@ -165,9 +199,10 @@ async function drawBillInSlot(
   page: PDFPage,
   uploadedFile: UploadedFile,
   slot: Slot,
+  enhanceOptions?: EnhanceOptions,
 ): Promise<void> {
   try {
-    const { bytes, type } = await processImage(uploadedFile.file, uploadedFile.rotation)
+    const { bytes, type } = await processImage(uploadedFile.file, uploadedFile.rotation, enhanceOptions)
     const image = await embedImageBytes(pdfDoc, bytes, type)
     drawImageInSlot(page, image, slot)
   } catch (err) {
@@ -182,7 +217,10 @@ async function drawBillInSlot(
  * - Bills (images): 4 per page, 2x2 grid
  * - Mixed: odd invoice on top half + up to 2 bills on bottom half
  */
-export async function mergeFiles(files: UploadedFile[]): Promise<Uint8Array> {
+export async function mergeFiles(
+  files: UploadedFile[],
+  enhanceOptions: EnhanceOptions = defaultEnhanceOptions,
+): Promise<Uint8Array> {
   if (files.length === 0) {
     throw new Error('No files to merge')
   }
@@ -222,11 +260,11 @@ export async function mergeFiles(files: UploadedFile[]): Promise<Uint8Array> {
     // Place up to 2 bills in bottom half (left/right)
     const hasBillsBelow = bills.length >= 1
     if (hasBillsBelow) {
-      await drawBillInSlot(pdfDoc, page, bills[0], SLOT_BOTTOM_LEFT)
+      await drawBillInSlot(pdfDoc, page, bills[0], SLOT_BOTTOM_LEFT, enhanceOptions)
       billStartIndex = 1
     }
     if (bills.length >= 2) {
-      await drawBillInSlot(pdfDoc, page, bills[1], SLOT_BOTTOM_RIGHT)
+      await drawBillInSlot(pdfDoc, page, bills[1], SLOT_BOTTOM_RIGHT, enhanceOptions)
       billStartIndex = 2
     }
     if (hasBillsBelow) {
@@ -240,7 +278,7 @@ export async function mergeFiles(files: UploadedFile[]): Promise<Uint8Array> {
     const page = pdfDoc.addPage([A4_WIDTH, A4_HEIGHT])
     const chunk = remainingBills.slice(i, i + 4)
     for (let j = 0; j < chunk.length; j++) {
-      await drawBillInSlot(pdfDoc, page, chunk[j], FOUR_GRID_SLOTS[j])
+      await drawBillInSlot(pdfDoc, page, chunk[j], FOUR_GRID_SLOTS[j], enhanceOptions)
     }
     // Draw cut lines for 4-grid pages
     const hasBottom = chunk.length > 2

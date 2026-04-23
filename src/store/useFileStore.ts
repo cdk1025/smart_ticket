@@ -1,11 +1,14 @@
 import { create } from 'zustand'
 import type { UploadedFile } from '../types'
+import { defaultEnhanceOptions } from '../utils/imageEnhancer'
+import type { EnhanceOptions } from '../utils/imageEnhancer'
 
 interface FileStore {
   files: UploadedFile[]
   mergedPdfUrl: string | null
   mergedPdfBytes: Uint8Array | null
   isMerging: boolean
+  enhanceOptions: EnhanceOptions
 
   addFiles: (files: UploadedFile[]) => void
   replaceFiles: (files: UploadedFile[]) => void
@@ -13,6 +16,8 @@ interface FileStore {
   reorderFiles: (files: UploadedFile[]) => void
   rotateFile: (id: string) => void
   setMergedPdf: (url: string, bytes: Uint8Array) => void
+  setEnhanceOptions: (options: Partial<EnhanceOptions>) => void
+  resetEnhanceOptions: () => void
   reset: () => void
 }
 
@@ -21,6 +26,7 @@ const initialState = {
   mergedPdfUrl: null as string | null,
   mergedPdfBytes: null as Uint8Array | null,
   isMerging: false,
+  enhanceOptions: { ...defaultEnhanceOptions } as EnhanceOptions,
 }
 
 export const useFileStore = create<FileStore>((set, get) => ({
@@ -63,6 +69,14 @@ export const useFileStore = create<FileStore>((set, get) => ({
 
   setMergedPdf: (url, bytes) => {
     set({ mergedPdfUrl: url, mergedPdfBytes: bytes })
+  },
+
+  setEnhanceOptions: (options) => {
+    set((state) => ({ enhanceOptions: { ...state.enhanceOptions, ...options } }))
+  },
+
+  resetEnhanceOptions: () => {
+    set({ enhanceOptions: { ...defaultEnhanceOptions } })
   },
 
   reset: () => {

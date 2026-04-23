@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router'
 import { useFileStore } from '../store/useFileStore'
 import { mergeFiles } from '../utils/pdfMerger'
@@ -17,7 +17,11 @@ export default function EditorPage() {
   const reorderFiles = useFileStore((s) => s.reorderFiles)
   const rotateFile = useFileStore((s) => s.rotateFile)
   const setMergedPdf = useFileStore((s) => s.setMergedPdf)
+  const enhanceOptions = useFileStore((s) => s.enhanceOptions)
+  const setEnhanceOptions = useFileStore((s) => s.setEnhanceOptions)
+  const resetEnhanceOptions = useFileStore((s) => s.resetEnhanceOptions)
 
+  const [enhanceOpen, setEnhanceOpen] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Guard: redirect if no files
@@ -60,7 +64,7 @@ export default function EditorPage() {
     if (isMerging || files.length === 0) return
     useFileStore.setState({ isMerging: true })
     try {
-      const bytes = await mergeFiles(files)
+      const bytes = await mergeFiles(files, enhanceOptions)
       const blob = new Blob([bytes as BlobPart], { type: 'application/pdf' })
       const url = URL.createObjectURL(blob)
       setMergedPdf(url, bytes)
@@ -71,7 +75,7 @@ export default function EditorPage() {
     } finally {
       useFileStore.setState({ isMerging: false })
     }
-  }, [files, isMerging, setMergedPdf, navigate])
+  }, [files, isMerging, setMergedPdf, navigate, enhanceOptions])
 
   // Don't render content if redirecting
   if (files.length === 0) return null
@@ -131,6 +135,87 @@ export default function EditorPage() {
           onRemove={removeFile}
           onRotate={rotateFile}
         />
+
+        {/* Image Enhancement Panel */}
+        <div className="mt-4 bg-white rounded-xl shadow-sm overflow-hidden">
+          <button
+            type="button"
+            className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+            onClick={() => setEnhanceOpen(!enhanceOpen)}
+          >
+            <span className="text-sm font-medium text-gray-700">
+              🎨 图像增强
+              <span className="ml-2 text-xs text-gray-400 font-normal">（仅对图片文件生效）</span>
+            </span>
+            <span className={`text-gray-400 transition-transform duration-200 ${enhanceOpen ? 'rotate-180' : ''}`}>
+              ▼
+            </span>
+          </button>
+
+          {enhanceOpen && (
+            <div className="px-4 pb-4 space-y-4 border-t border-gray-100 pt-3">
+              {/* Contrast */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-sm text-gray-600">对比度</label>
+                  <span className="text-xs text-gray-500 font-mono">{Math.round(enhanceOptions.contrast * 100)}%</span>
+                </div>
+                <input
+                  type="range"
+                  min={0.5}
+                  max={2}
+                  step={0.05}
+                  value={enhanceOptions.contrast}
+                  onChange={(e) => setEnhanceOptions({ contrast: parseFloat(e.target.value) })}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                />
+              </div>
+
+              {/* Brightness */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-sm text-gray-600">亮度</label>
+                  <span className="text-xs text-gray-500 font-mono">{Math.round(enhanceOptions.brightness * 100)}%</span>
+                </div>
+                <input
+                  type="range"
+                  min={0.5}
+                  max={2}
+                  step={0.05}
+                  value={enhanceOptions.brightness}
+                  onChange={(e) => setEnhanceOptions({ brightness: parseFloat(e.target.value) })}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                />
+              </div>
+
+              {/* Sharpen */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-sm text-gray-600">锐化</label>
+                  <span className="text-xs text-gray-500 font-mono">{Math.round(enhanceOptions.sharpen * 100)}%</span>
+                </div>
+                <input
+                  type="range"
+                  min={0}
+                  max={2}
+                  step={0.1}
+                  value={enhanceOptions.sharpen}
+                  onChange={(e) => setEnhanceOptions({ sharpen: parseFloat(e.target.value) })}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                />
+              </div>
+
+              {/* Reset button */}
+              <button
+                type="button"
+                className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                onClick={resetEnhanceOptions}
+              >
+                重置
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Merge overlay */}
