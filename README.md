@@ -44,6 +44,7 @@ No server. No upload. **100% local processing.** Your documents never leave your
 - ⬇️ **Instant download** — save your merged PDF with one click
 - 🔒 **Pure client-side** — zero server, zero upload, privacy safe
 - 🎨 **Image Enhancement** — Adjust contrast, brightness, and sharpness before merging (Canvas API)
+- 🔍 **Smart Document Correction** — Auto edge detection & perspective correction for photographed invoices (Scanic WASM)
 
 ### 🛠️ Tech Stack
 
@@ -56,6 +57,7 @@ No server. No upload. **100% local processing.** Your documents never leave your
 | Drag & Drop | @dnd-kit |
 | Build Tool | Vite 8 |
 | File Download | FileSaver.js |
+| Document Scanner | Scanic (Rust/WASM) |
 
 ### 🚀 Getting Started
 
@@ -86,7 +88,7 @@ npm run deploy
 - [ ] 🤖 AI invoice classification & categorization
 - [ ] 💰 AI amount extraction & expense ledger generation
 - [ ] 📑 Multi-ticket smart layout per page
-- [ ] 🧹 Invoice edge cleanup & clarity enhancement — ✅ Phase 1 Done
+- [ ] 🧹 Invoice edge cleanup & clarity enhancement — ✅ Phase 1 Done (Image Enhancement) / ✅ Phase 2 Done (Edge Detection & Perspective Correction)
 - [ ] 🔍 Duplicate reimbursement detection
 
 ### 📄 License

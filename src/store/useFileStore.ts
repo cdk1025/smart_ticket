@@ -15,6 +15,7 @@ interface FileStore {
   removeFile: (id: string) => void
   reorderFiles: (files: UploadedFile[]) => void
   rotateFile: (id: string) => void
+  updateFile: (id: string, updates: Partial<Pick<UploadedFile, 'file' | 'name' | 'thumbnailUrl'>>) => void
   setMergedPdf: (url: string, bytes: Uint8Array) => void
   setEnhanceOptions: (options: Partial<EnhanceOptions>) => void
   resetEnhanceOptions: () => void
@@ -64,6 +65,18 @@ export const useFileStore = create<FileStore>((set, get) => ({
       files: state.files.map((f) =>
         f.id === id ? { ...f, rotation: ((f.rotation + 90) % 360) as 0 | 90 | 180 | 270 } : f
       ),
+    }))
+  },
+
+  updateFile: (id, updates) => {
+    set((state) => ({
+      files: state.files.map((f) => {
+        if (f.id !== id) return f
+        if (updates.thumbnailUrl && f.thumbnailUrl !== updates.thumbnailUrl) {
+          URL.revokeObjectURL(f.thumbnailUrl)
+        }
+        return { ...f, ...updates }
+      }),
     }))
   },
 

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import { useFileStore } from '../store/useFileStore'
 import { mergeFiles } from '../utils/pdfMerger'
 import { generateThumbnail } from '../utils/thumbnailGenerator'
+import { autoCorrectFromFile, canvasToFile } from '../utils/documentScanner'
 import SortableFileList from '../components/SortableFileList'
 import type { UploadedFile } from '../types'
 
@@ -21,7 +22,12 @@ export default function EditorPage() {
   const setEnhanceOptions = useFileStore((s) => s.setEnhanceOptions)
   const resetEnhanceOptions = useFileStore((s) => s.resetEnhanceOptions)
 
+  const updateFile = useFileStore((s) => s.updateFile)
+
   const [enhanceOpen, setEnhanceOpen] = useState(false)
+  const [scanOpen, setScanOpen] = useState(false)
+  const [isScanning, setIsScanning] = useState(false)
+  const [scanResult, setScanResult] = useState<{ success: number; failed: number } | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Guard: redirect if no files
@@ -76,6 +82,36 @@ export default function EditorPage() {
       useFileStore.setState({ isMerging: false })
     }
   }, [files, isMerging, setMergedPdf, navigate, enhanceOptions])
+
+  const handleAutoCorrect = useCallback(async () => {
+    const imageFiles = files.filter((f) => f.type === 'image')
+    if (imageFiles.length === 0) return
+
+    setIsScanning(true)
+    setScanResult(null)
+
+    let success = 0
+    let failed = 0
+
+    for (const item of imageFiles) {
+      try {
+        const result = await autoCorrectFromFile(item.file)
+        if (result.success && result.canvas) {
+          const correctedFile = await canvasToFile(result.canvas, item.name)
+          const thumbnailUrl = await generateThumbnail(correctedFile)
+          updateFile(item.id, { file: correctedFile, thumbnailUrl })
+          success++
+        } else {
+          failed++
+        }
+      } catch {
+        failed++
+      }
+    }
+
+    setScanResult({ success, failed })
+    setIsScanning(false)
+  }, [files, updateFile])
 
   // Don't render content if redirecting
   if (files.length === 0) return null
@@ -213,6 +249,60 @@ export default function EditorPage() {
               >
                 重置
               </button>
+            </div>
+          )}
+        </div>
+
+        {/* Document Scan Correction Panel */}
+        <div className="mt-4 bg-white rounded-xl shadow-sm overflow-hidden">
+          <button
+            type="button"
+            className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+            onClick={() => setScanOpen(!scanOpen)}
+          >
+            <span className="text-sm font-medium text-gray-700">
+              🔍 智能文档校正
+              <span className="ml-2 text-xs text-gray-400 font-normal">（自动边缘检测与透视校正）</span>
+            </span>
+            <span className={`text-gray-400 transition-transform duration-200 ${scanOpen ? 'rotate-180' : ''}`}>
+              ▼
+            </span>
+          </button>
+
+          {scanOpen && (
+            <div className="px-4 pb-4 space-y-3 border-t border-gray-100 pt-3">
+              <p className="text-xs text-gray-500">
+                自动检测文档边缘并校正透视变形，适用于拍照的发票/票据。仅对图片文件生效。
+              </p>
+
+              <button
+                type="button"
+                className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                onClick={handleAutoCorrect}
+                disabled={isScanning || isMerging || files.filter((f) => f.type === 'image').length === 0}
+              >
+                {isScanning && (
+                  <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                )}
+                {isScanning ? '校正中...' : '一键校正所有图片'}
+              </button>
+
+              {files.filter((f) => f.type === 'image').length === 0 && (
+                <p className="text-xs text-amber-600">当前没有图片文件，无法执行校正。</p>
+              )}
+
+              {scanResult && (
+                <p className="text-xs text-gray-600">
+                  处理结果：
+                  {scanResult.success > 0 && (
+                    <span className="text-green-600 font-medium">成功 {scanResult.success} 张</span>
+                  )}
+                  {scanResult.success > 0 && scanResult.failed > 0 && '，'}
+                  {scanResult.failed > 0 && (
+                    <span className="text-amber-600 font-medium">跳过 {scanResult.failed} 张</span>
+                  )}
+                </p>
+              )}
             </div>
           )}
         </div>
