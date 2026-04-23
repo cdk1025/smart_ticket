@@ -45,6 +45,9 @@ No server. No upload. **100% local processing.** Your documents never leave your
 - 🔒 **Pure client-side** — zero server, zero upload, privacy safe
 - 🎨 **Image Enhancement** — Adjust contrast, brightness, and sharpness before merging (Canvas API)
 - 🔍 **Smart Document Correction** — Auto edge detection & perspective correction for photographed invoices (Scanic WASM)
+- 🔄 **Smart upload modes** — Replace mode on homepage, append mode on editor page
+- 📜 **Privacy Policy & Disclaimer** — Dedicated pages for legal transparency
+- ☕ **Donate support** — Alipay & WeChat Pay
 
 ### 🛠️ Tech Stack
 
@@ -88,7 +91,7 @@ npm run deploy
 - [ ] 🤖 AI invoice classification & categorization
 - [ ] 💰 AI amount extraction & expense ledger generation
 - [ ] 📑 Multi-ticket smart layout per page
-- [ ] 🧹 Invoice edge cleanup & clarity enhancement — ✅ Phase 1 Done (Image Enhancement) / ✅ Phase 2 Done (Edge Detection & Perspective Correction)
+- [x] 🧹 Invoice edge cleanup & clarity enhancement — ✅ Done (Canvas API Image Enhancement + Scanic Edge Detection & Perspective Correction)
 - [ ] 🔍 Duplicate reimbursement detection
 
 ### 📄 License
