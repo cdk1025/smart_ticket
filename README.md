@@ -98,6 +98,10 @@ npm run deploy
 
 This project is licensed under the [MIT License](LICENSE).
 
+## 🙏 Acknowledgments
+
+- [LINUX DO](https://linux.do/) — Community support and inspiration
+
 ---
 
 <div align="center">

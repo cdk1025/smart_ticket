@@ -12,6 +12,8 @@ export default function Footer() {
         <Link to="/disclaimer" className="hover:text-gray-600 hover:underline">免责声明</Link>
         <span className="mx-2">|</span>
         <a href="https://github.com/cdk1025/smart_ticket" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 hover:underline">GitHub</a>
+        <span className="mx-2">|</span>
+        <a href="https://linux.do/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors">LINUX DO</a>
       </p>
       <p className="text-xs text-gray-400">
         🔒 所有文件仅在浏览器本地处理，绝不上传服务器

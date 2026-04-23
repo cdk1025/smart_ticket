@@ -100,6 +100,10 @@ npm run deploy
 
 本项目基于 [MIT 协议](LICENSE) 开源。
 
+## 🙏 致谢
+
+- [LINUX DO](https://linux.do/) — 社区支持与灵感来源
+
 ---
 
 <div align="center">
