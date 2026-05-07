@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e40af"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <!-- Document gradient -->
+    <linearGradient id="docGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#e0e7ff" stop-opacity="0.9"/>
+    </linearGradient>
+    <!-- PDF icon gradient -->
+    <linearGradient id="pdfGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+    <!-- Arrow gradient -->
+    <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#93c5fd"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+    <!-- Dot pattern -->
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1.2" fill="#ffffff" opacity="0.12"/>
+    </pattern>
+    <!-- Subtle grid lines -->
+    <pattern id="grid" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#ffffff" stroke-width="0.3" opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bgGrad)"/>
+
+  <!-- Decorative patterns -->
+  <rect width="1200" height="675" fill="url(#dots)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="950" cy="80" r="180" fill="#ffffff" opacity="0.03"/>
+  <circle cx="1050" cy="550" r="120" fill="#ffffff" opacity="0.03"/>
+  <circle cx="100" cy="600" r="100" fill="#ffffff" opacity="0.025"/>
+
+  <!-- Decorative diagonal lines -->
+  <line x1="0" y1="675" x2="400" y2="500" stroke="#ffffff" stroke-width="0.5" opacity="0.05"/>
+  <line x1="800" y1="0" x2="1200" y2="200" stroke="#ffffff" stroke-width="0.5" opacity="0.05"/>
+
+  <!-- ====== LEFT SIDE CONTENT (60%) ====== -->
+
+  <!-- Main title -->
+  <text x="80" y="240" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="64" font-weight="bold" fill="#ffffff" letter-spacing="6">
+    智票合
+  </text>
+  <!-- English brand name -->
+  <text x="84" y="280" font-family="'Inter', 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="18" fill="#93c5fd" letter-spacing="3" opacity="0.8">
+    SMART TICKET
+  </text>
+
+  <!-- Subtitle -->
+  <text x="84" y="340" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="22" fill="#ffffff" opacity="0.92">
+    AI 一键合并 · 发票账单轻松打印
+  </text>
+
+  <!-- Decorative line under subtitle -->
+  <rect x="84" y="360" width="60" height="3" rx="1.5" fill="#60a5fa" opacity="0.8"/>
+
+  <!-- Tags row -->
+  <!-- React tag -->
+  <rect x="84" y="400" width="80" height="32" rx="16" fill="#ffffff" opacity="0.15"/>
+  <text x="124" y="421" font-family="'Inter', 'SF Pro Display', sans-serif" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="500">React</text>
+
+  <!-- TypeScript tag -->
+  <rect x="176" y="400" width="110" height="32" rx="16" fill="#ffffff" opacity="0.15"/>
+  <text x="231" y="421" font-family="'Inter', 'SF Pro Display', sans-serif" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="500">TypeScript</text>
+
+  <!-- Vite 8 tag -->
+  <rect x="298" y="400" width="76" height="32" rx="16" fill="#ffffff" opacity="0.15"/>
+  <text x="336" y="421" font-family="'Inter', 'SF Pro Display', sans-serif" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="500">Vite 8</text>
+
+  <!-- 开源免费 tag -->
+  <rect x="386" y="400" width="96" height="32" rx="16" fill="#ffffff" opacity="0.15"/>
+  <text x="434" y="421" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="500">开源免费</text>
+
+  <!-- Privacy badge -->
+  <rect x="84" y="446" width="160" height="32" rx="16" fill="#ffffff" opacity="0.1"/>
+  <text x="164" y="467" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="13" fill="#93c5fd" text-anchor="middle" font-weight="500">🔒 纯本地处理 · 隐私安全</text>
+
+  <!-- ====== RIGHT SIDE VISUAL (40%) ====== -->
+
+  <!-- Document 1 (back, tilted left) -->
+  <g transform="translate(830, 120) rotate(-8)">
+    <rect x="0" y="0" width="140" height="180" rx="8" fill="url(#docGrad)" opacity="0.5"/>
+    <!-- Lines on document -->
+    <rect x="20" y="30" width="100" height="6" rx="3" fill="#3b82f6" opacity="0.2"/>
+    <rect x="20" y="48" width="80" height="5" rx="2.5" fill="#3b82f6" opacity="0.15"/>
+    <rect x="20" y="63" width="90" height="5" rx="2.5" fill="#3b82f6" opacity="0.15"/>
+    <rect x="20" y="78" width="60" height="5" rx="2.5" fill="#3b82f6" opacity="0.15"/>
+    <!-- Dollar sign (invoice) -->
+    <text x="70" y="145" font-family="'Inter', sans-serif" font-size="36" fill="#3b82f6" opacity="0.15" text-anchor="middle" font-weight="bold">¥</text>
+  </g>
+
+  <!-- Document 2 (middle, tilted right) -->
+  <g transform="translate(880, 105) rotate(5)">
+    <rect x="0" y="0" width="140" height="180" rx="8" fill="url(#docGrad)" opacity="0.65"/>
+    <!-- Lines on document -->
+    <rect x="20" y="30" width="100" height="6" rx="3" fill="#3b82f6" opacity="0.25"/>
+    <rect x="20" y="48" width="70" height="5" rx="2.5" fill="#3b82f6" opacity="0.18"/>
+    <rect x="20" y="63" width="85" height="5" rx="2.5" fill="#3b82f6" opacity="0.18"/>
+    <rect x="20" y="78" width="55" height="5" rx="2.5" fill="#3b82f6" opacity="0.18"/>
+    <!-- Receipt icon -->
+    <text x="70" y="145" font-family="'Inter', sans-serif" font-size="36" fill="#3b82f6" opacity="0.18" text-anchor="middle" font-weight="bold">¥</text>
+  </g>
+
+  <!-- Document 3 (front, straight) -->
+  <g transform="translate(855, 95)">
+    <rect x="0" y="0" width="140" height="180" rx="8" fill="url(#docGrad)" opacity="0.85"/>
+    <!-- Folded corner -->
+    <path d="M110 0 L140 30 L110 30 Z" fill="#dbeafe" opacity="0.6"/>
+    <!-- Lines on document -->
+    <rect x="20" y="40" width="100" height="7" rx="3.5" fill="#2563eb" opacity="0.25"/>
+    <rect x="20" y="60" width="80" height="5" rx="2.5" fill="#3b82f6" opacity="0.2"/>
+    <rect x="20" y="75" width="90" height="5" rx="2.5" fill="#3b82f6" opacity="0.2"/>
+    <rect x="20" y="90" width="65" height="5" rx="2.5" fill="#3b82f6" opacity="0.2"/>
+    <rect x="20" y="105" width="75" height="5" rx="2.5" fill="#3b82f6" opacity="0.2"/>
+    <!-- Stamp area -->
+    <circle cx="100" cy="140" r="18" fill="none" stroke="#ef4444" stroke-width="1.5" opacity="0.25"/>
+    <text x="100" y="145" font-family="'PingFang SC', sans-serif" font-size="10" fill="#ef4444" opacity="0.3" text-anchor="middle">发票</text>
+  </g>
+
+  <!-- Merge arrow -->
+  <g transform="translate(895, 310)">
+    <!-- Arrow body -->
+    <rect x="20" y="0" width="24" height="50" rx="12" fill="url(#arrowGrad)" opacity="0.8"/>
+    <!-- Arrow head -->
+    <path d="M8 45 L32 80 L56 45" fill="url(#arrowGrad)" opacity="0.8"/>
+    <!-- Small sparkle -->
+    <circle cx="10" cy="25" r="3" fill="#ffffff" opacity="0.5"/>
+    <circle cx="54" cy="35" r="2" fill="#ffffff" opacity="0.4"/>
+  </g>
+
+  <!-- Merged PDF document -->
+  <g transform="translate(835, 410)">
+    <!-- Shadow -->
+    <rect x="6" y="6" width="180" height="130" rx="10" fill="#000000" opacity="0.1"/>
+    <!-- PDF body -->
+    <rect x="0" y="0" width="180" height="130" rx="10" fill="url(#pdfGrad)"/>
+    <!-- PDF label -->
+    <rect x="12" y="12" width="50" height="22" rx="4" fill="#ef4444" opacity="0.9"/>
+    <text x="37" y="28" font-family="'Inter', 'Helvetica Neue', sans-serif" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">PDF</text>
+    <!-- Content lines -->
+    <rect x="12" y="46" width="156" height="5" rx="2.5" fill="#2563eb" opacity="0.15"/>
+    <rect x="12" y="58" width="130" height="5" rx="2.5" fill="#2563eb" opacity="0.12"/>
+    <rect x="12" y="70" width="145" height="5" rx="2.5" fill="#2563eb" opacity="0.12"/>
+    <rect x="12" y="82" width="100" height="5" rx="2.5" fill="#2563eb" opacity="0.12"/>
+    <!-- Check mark -->
+    <circle cx="150" cy="105" r="14" fill="#22c55e" opacity="0.85"/>
+    <path d="M142 105 L148 111 L159 99" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- ====== BOTTOM BAR ====== -->
+
+  <!-- Separator line -->
+  <line x1="60" y1="610" x2="1140" y2="610" stroke="#ffffff" stroke-width="0.8" opacity="0.2"/>
+
+  <!-- GitHub icon and URL -->
+  <g transform="translate(80, 630)">
+    <!-- GitHub icon simplified -->
+    <circle cx="8" cy="8" r="8" fill="#ffffff" opacity="0.5"/>
+    <path d="M8 2 C4.7 2 2 4.7 2 8 C2 10.6 3.7 12.8 6 13.5 C6.3 13.5 6.4 13.4 6.4 13.2 C6.4 13.1 6.4 12.7 6.4 12.2 C4.7 12.6 4.3 11.5 4.3 11.5 C4 10.8 3.6 10.6 3.6 10.6 C3 10.2 3.6 10.2 3.6 10.2 C4.2 10.2 4.6 10.8 4.6 10.8 C5.1 11.6 6 11.3 6.4 11.1 C6.5 10.7 6.6 10.5 6.8 10.4 C5.4 10.2 3.9 9.7 3.9 7.5 C3.9 6.8 4.2 6.3 4.6 5.9 C4.5 5.7 4.2 5.1 4.7 4.3 C4.7 4.3 5.2 4.1 6.4 4.9 C6.9 4.7 7.4 4.7 8 4.7 C8.6 4.7 9.1 4.7 9.6 4.9 C10.8 4.1 11.3 4.3 11.3 4.3 C11.8 5.1 11.5 5.7 11.4 5.9 C11.8 6.3 12.1 6.8 12.1 7.5 C12.1 9.7 10.6 10.2 9.2 10.4 C9.4 10.5 9.6 10.9 9.6 11.4 C9.6 12.2 9.6 12.8 9.6 13.2 C9.6 13.4 9.7 13.6 10 13.5 C12.3 12.8 14 10.6 14 8 C14 4.7 11.3 2 8 2" fill="#1e40af" opacity="0.7"/>
+    <text x="24" y="13" font-family="'Inter', 'SF Mono', monospace" font-size="13" fill="#ffffff" opacity="0.6">github.com/cdk1025/smart_ticket</text>
+  </g>
+
+  <!-- Demo URL -->
+  <g transform="translate(720, 630)">
+    <!-- Globe icon -->
+    <circle cx="8" cy="8" r="7" fill="none" stroke="#ffffff" stroke-width="1.2" opacity="0.5"/>
+    <ellipse cx="8" cy="8" rx="3.5" ry="7" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.4"/>
+    <line x1="1" y1="8" x2="15" y2="8" stroke="#ffffff" stroke-width="0.8" opacity="0.4"/>
+    <text x="24" y="13" font-family="'Inter', 'SF Mono', monospace" font-size="13" fill="#ffffff" opacity="0.6">cdk1025.github.io/smart_ticket</text>
+  </g>
+
+</svg>
